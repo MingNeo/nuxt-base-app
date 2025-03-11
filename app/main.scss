@@ -1,0 +1,68 @@
+:root {
+  --primary-color: #3356EB;
+  --text-color: #333;
+}
+
+/* 覆盖uno.css全局样式 */
+.container {
+  max-width: 100%;
+
+  @media (min-width: 1280px) {
+    max-width: 100%;
+  }
+
+  @media (min-width: 1536px) {
+    max-width: 100%;
+  }
+
+  @media (min-width: 1024px) {
+    max-width: 100%;
+  }
+}
+
+html.dark,
+body.dark {
+  color-scheme: dark;
+}
+
+img {
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+a {
+  cursor: pointer;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: white;
+  color: var(--text-color);
+}
+
+* {
+  &::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-bg);
+    border-radius: 4px;
+  }
+}
+
+// @font-face {
+//   font-family: "D-DIN";
+//   src: url("~/assets/fonts/d-din/D-DIN-Bold.woff2") format("woff2"),
+//     url("~/assets/fonts/d-din/D-DIN-Bold.woff") format("woff");
+//   font-display: swap;
+// }
