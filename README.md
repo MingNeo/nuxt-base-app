@@ -90,6 +90,42 @@ const { data, error, execute } = await useRequestAsync('/api/user')
 const { data, error, execute } = await useAsyncData('getUser', getUser)
 ```
 
+### 图标
+
+使用 [@iconify/vue](https://iconify.design/docs/icon-components/vue/)
+以及unocss icon
+
+```html
+<!-- 使用@iconify/vue ，无需安装图标包，可以直接使用@iconify/vue的所有图标，使用哪个图标直接远程获取并自动缓存 -->
+<!-- 可以在 https://icon-sets.iconify.design/ 右上角搜索图标 -->
+<Icon icon="icon-park-outline:back" class="text-red-500 w-10 h-10" />
+
+<!-- 安装的图标包也可以使用unocss的样式类名或属性名，如：i-local-warning -->
+<div i-carbon-close />
+<div class="i-carbon-close" />
+```
+
+#### 本地图标使用方式1
+
+```html
+<!-- 本地图标使用unocss处理icon，在src/assets/icons目录下放置svg文件即可 -->
+<!-- 如src/assets/icons/warning.svg ，用法为: 'local:' + 文件名 -->
+<Icon icon="local:back" class="text-red-500 w-10 h-10" />
+<!-- 同样可以直接使用unocss的写法 -->
+<div i-local-warning />
+<div class="i-local-warning" />
+```
+
+#### 本地图标使用方式2
+
+可在src/assets/icons/iconify.json中配置。
+如上传至iconfont，并配合(tampermonkey-iconfont-iconify油猴插件)[https://github.com/yee94/tampermonkey-iconfont-iconify]插件直接下载iconify.json文件覆盖即可。
+然后如下使用：
+
+```html
+<Icon icon="local:back" class="text-red-500 w-10 h-10" />
+```
+
 ### 静态资源
 
 静态资源放在 `public` 及 `app/assets` 目录下:

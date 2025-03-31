@@ -29,7 +29,7 @@ function transformerMobile() {
   }
 }
 
-const iconsDir = './assets/icons'
+const iconsDir = './app/assets/icons'
 
 export default defineConfig({
   shortcuts: [

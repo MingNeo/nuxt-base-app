@@ -15,7 +15,6 @@ const online = useOnline()
           <div class="text-2xl font-bold">
             Nuxt Base Template
           </div>
-          <div i-carbon-close class="h-5 w-5" />
           <p>
             这是一个基于 Nuxt 3 的基础模板项目,集成了常用的最基础功能和最佳实践。
           </p>
