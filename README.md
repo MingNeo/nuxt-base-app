@@ -163,6 +163,46 @@ const { screenSize, isMobile } = useScreenSize()
 <div class="max-sm:w-full">hello</div>
 ```
 
+### 移动端安全区适配
+
+iPhone X 等机型有胶囊、底部指示条等，需要针对这些机型进行安全区适配。
+
+可以开启相关适配
+
+```html
+<!-- 在 head 标签中添加 meta 标签，并设置 viewport-fit=cover 值 -->
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover"
+/>
+```
+
+使用MobileSafeContainer容器包裹内容即可
+
+```vue
+<MobileSafeContainer top bottom class="xxx">
+  <div>内容</div>
+</MobileSafeContainer>
+```
+
+或使用本工程提供的的`safe-pt、safe-pb、safe-mt、safe-mb、safe-pt-*、safe-pb-*、safe-mt-*、safe-mb-*`类名
+
+```html
+<div class="safe-pt">内容</div>
+<div class="safe-pt-2">内容</div>
+```
+
+等同于
+
+```css
+.safe-pt {
+  padding-top: env(safe-area-inset-top);
+}
+.safe-pt-2 {
+  padding-top: calc(env(safe-area-inset-top) + 2rem);
+}
+```
+
 ### 自动路由
 
 在 `app/pages` 目录下创建新的页面文件，文件名即为路由路径，如 `app/pages/index.vue` 对应 `/` 路由。

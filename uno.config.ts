@@ -41,6 +41,19 @@ export default defineConfig({
       primary: '#007bff',
     },
   },
+  rules: [
+    ['xy-center', { position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }],
+    ['flex-center', { 'display': 'flex', 'justify-content': 'center', 'align-items': 'center' }],
+    ['transition', { 'transition-property': 'all', 'transition-timing-function': 'cubic-bezier(0.4, 0, 0.2, 1)', 'transition-duration': '150ms' }],
+    ['safe-pt', { 'padding-top': `env(safe-area-inset-top)` }],
+    ['safe-pb', { 'padding-bottom': `env(safe-area-inset-bottom)` }],
+    ['safe-mt', { 'margin-top': `env(safe-area-inset-top)` }],
+    ['safe-mb', { 'margin-bottom': `env(safe-area-inset-bottom)` }],
+    [/^safe-pt-(\d)$/, ([, d]) => ({ 'padding-top': `calc(env(safe-area-inset-top) + ${+d * 0.25}rem)` }), { layer: 'utilities' }], // 不兼容iOS < 11.2
+    [/^safe-pb-(\d)$/, ([, d]) => ({ 'padding-bottom': `calc(env(safe-area-inset-bottom) + ${+d * 0.25}rem)` }), { layer: 'utilities' }], // 不兼容iOS < 11.2
+    [/^safe-mt-(\d)$/, ([, d]) => ({ 'margin-top': `calc(env(safe-area-inset-top) + ${+d * 0.25}rem)` }), { layer: 'utilities' }], // 不兼容iOS < 11.2
+    [/^safe-mb-(\d)$/, ([, d]) => ({ 'margin-bottom': `calc(env(safe-area-inset-bottom) + ${+d * 0.25}rem)` }), { layer: 'utilities' }], // 不兼容iOS < 11.2
+  ],
   presets: [
     presetUno(),
     presetAttributify(),
