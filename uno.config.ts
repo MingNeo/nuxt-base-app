@@ -11,19 +11,23 @@ import {
 } from 'unocss'
 
 /**
- * 将mobile:xxx转换为".is-mobile .xxx"
- * 通常情况无需使用，仅当is-mobile不仅仅是根据尺寸，还根据是否嵌入时使用
- * 需通过js等自行设置body或根节点的class为"is-mobile"
+ * 将mobile:xxx/pc:xxx/app:xxx等转换为对应的类名
  * 例如：
- * 1. 根据尺寸：max-md:text-xl
- * 2. 根据尺寸及是否嵌入：mobile:text-xl
+ * mobile:xxx 转换为 ".is-mobile .xxx"
+ * pc:xxx 转换为 ".is-pc .xxx"
+ * app:xxx 转换为 ".is-app .xxx"
+ *
+ * 通常情况无需使用，仅当需要根据特定环境设置样式时使用
+ * 需通过js等自行设置body或根节点的对应class（如"is-mobile"）
+ * 例如：mobile:text-xl 或 pc:text-xl 或 app:text-xl
  */
-function transformerMobile() {
+function transformerEnv() {
   return {
-    name: 'transformer-mobile',
+    name: 'transformer-env',
     transform(code: any) {
-      return code.replace(/mobile:(\w+)/g, (match: string, p1: string) => {
-        return `.is-mobile .${p1}`
+      // 自定义不同的环境前缀
+      return code.replace(/(mobile|pc|app):(\w+)/g, (match: string, p1: string, p2: string) => {
+        return `.is-${p1} .${p2}`
       })
     },
   }
@@ -75,9 +79,23 @@ export default defineConfig({
   transformers: [
     transformerDirectives(),
     transformerVariantGroup(),
-    transformerMobile(),
+    transformerEnv(),
   ],
-  // safelist: generateSafeList(), // 动态生成 `safelist`
+  extractors: [
+    // 对Icon组件编写专门的提取器
+    {
+      name: '@unocss/custom-iconify/extractor',
+      extract({ code }) {
+        const result = Array.from(code.matchAll(/(:icon|icon)=?(?:"([^"]*)"|'([^']*)'|\{([^}]*)\})?/g))
+          .flatMap(([, , content]) => {
+            return content?.includes('local:') ? `i-local-${content.replace('local:', '')}` : undefined
+          })
+          .filter(Boolean) as string[]
+        return result
+      },
+    },
+  ],
+  // safelist: generateSafeList(),
 })
 
 // function generateSafeList() {
@@ -85,7 +103,7 @@ export default defineConfig({
 //     return fs
 //       .readdirSync(iconsDir)
 //       .filter(file => file.endsWith('.svg'))
-//       .map(file => `i-local:${file.replace('.svg', '')}`)
+//       .map(file => `i-local-${file.replace('.svg', '')}`)
 //   }
 //   catch (error) {
 //     console.error('无法读取图标目录:', error)
